@@ -54,10 +54,3 @@ A simple and fun two-player game where the objective is to get three of your mar
 
 ### Screenshot
 ![Tic Tac Toe Screenshot](path/to/tic_tac_toe_screenshot.png)
-
-## Installation
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/GUI-Games-Collection.git
-   cd GUI-Games-Collection
