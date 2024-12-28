@@ -22,7 +22,10 @@ game_asserts = {
 }
 
 def draw_home_page(win):
-    win.blit(game_asserts["homepage"],())
+    win.blit(game_asserts["homepage"],(0,0))
+
+def draw_window(win):
+    draw_home_page(win)
 
 def main():
 
@@ -33,6 +36,8 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
+
+        draw_window(win)
 
         pygame.display.flip()
         clock.tick(FPS)
