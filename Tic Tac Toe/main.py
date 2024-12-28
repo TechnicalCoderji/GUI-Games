@@ -4,7 +4,7 @@ pygame.init()
 
 # Creating window
 RES = WIDTH, HEIGHT = 490 ,490
-gameWindow = pygame.display.set_mode(RES)
+win = pygame.display.set_mode(RES)
 pygame.display.set_caption("tictok game by Technical Coderji")
 clock = pygame.time.Clock()
 FPS = 60
@@ -15,6 +15,14 @@ black = (0, 0, 0)
 blue = (0,0,255)
 red = (255,0,0)
 green = (0,255,0)
+
+#load images
+game_asserts = {
+    "homepage":pygame.transform.scale(pygame.image.load("img\homepage.jpg"),RES)
+}
+
+def draw_home_page(win):
+    win.blit(game_asserts["homepage"],())
 
 def main():
 
