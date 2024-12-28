@@ -18,7 +18,9 @@ green = (0,255,0)
 
 #load images
 game_asserts = {
-    "homepage":pygame.transform.scale(pygame.image.load("img\homepage.jpg"),RES)
+    "homepage": pygame.transform.scale(pygame.image.load("img\homepage.jpg"),RES),
+    "ximage": pygame.transform.scale(pygame.image.load("img/x.png"),(110,110)),
+    "oimage": pygame.transform.scale(pygame.image.load("img/o.png"),(110,110))
 }
 
 def draw_home_page(win):
