@@ -26,10 +26,24 @@ game_asserts = {
 def draw_home_page(win):
     win.blit(game_asserts["homepage"],(0,0))
 
+def draw_game_page(win):
+    win.fill((0,0,0))
+
 def draw_window(win):
-    draw_home_page(win)
+    page = stack[-1]
+
+    if page == "homepage":
+        draw_home_page(win)
+    elif page == "gamepage":
+        draw_game_page(win)
+
+# Game Related Variable
+stack = []
 
 def main():
+    global stack
+
+    stack.append("homepage")
 
     #for gameloop
     while True:
@@ -38,6 +52,12 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
+            
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_p:
+                    stack.append("gamepage")
+                if event.key == pygame.K_BACKSPACE:
+                    stack.pop()
 
         draw_window(win)
 
