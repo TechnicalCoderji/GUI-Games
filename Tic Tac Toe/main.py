@@ -20,7 +20,8 @@ green = (0,255,0)
 game_asserts = {
     "homepage": pygame.transform.scale(pygame.image.load("img\homepage.jpg"),RES),
     "ximage": pygame.transform.scale(pygame.image.load("img/x.png"),(110,110)),
-    "oimage": pygame.transform.scale(pygame.image.load("img/o.png"),(110,110))
+    "oimage": pygame.transform.scale(pygame.image.load("img/o.png"),(110,110)),
+    "playbutton":pygame.image.load("img\playbutton.png")
 }
 
 # Functions and Classes
@@ -41,6 +42,7 @@ class ImageButton:
 
 def draw_home_page(win):
     win.blit(game_asserts["homepage"],(0,0))
+    play_button.draw(win)
 
 def draw_game_page(win):
     win.fill((0,0,0))
@@ -55,6 +57,9 @@ def draw_window(win):
 
 # Game Related Variable
 stack = []
+
+# Objects
+play_button = ImageButton(140,322, game_asserts["playbutton"],208,78)
 
 def main():
     global stack
