@@ -87,7 +87,7 @@ def check_event(event):
 stack = []
 
 # Objects
-play_button = ImageButton(140,322, game_asserts["playbutton"],208,78)
+play_button = ImageButton(143,328, game_asserts["playbutton"],213,78)
 
 def main():
     global stack
