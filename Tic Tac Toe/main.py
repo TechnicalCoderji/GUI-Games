@@ -3,7 +3,7 @@ import pygame
 pygame.init()
 
 # Creating window
-RES = WIDTH, HEIGHT = 490 ,490
+RES = WIDTH, HEIGHT = 500 ,500
 win = pygame.display.set_mode(RES)
 pygame.display.set_caption("tictok game by Technical Coderji")
 clock = pygame.time.Clock()
@@ -19,8 +19,8 @@ green = (0,255,0)
 #load images
 game_asserts = {
     "homepage": pygame.transform.scale(pygame.image.load("img\homepage.jpg"),RES),
-    "ximage": pygame.transform.scale(pygame.image.load("img/x.png"),(110,110)),
-    "oimage": pygame.transform.scale(pygame.image.load("img/o.png"),(110,110)),
+    "ximage": pygame.image.load("img/x.png"),
+    "oimage": pygame.image.load("img/o.png"),
     "playbutton":pygame.image.load("img\playbutton.png")
 }
 
@@ -48,6 +48,12 @@ def draw_home_page(win):
 # For Draw Main Game Page
 def draw_game_page(win):
     win.fill((0,0,0))
+
+    pygame.draw.rect(win,(252, 186, 3),(0,0,*RES),40)
+
+    for i in range(1,3):
+        pygame.draw.line(win,(0,255,0),(40,(140*i)+40),(460,(140*i)+40),10)
+        pygame.draw.line(win,(0,255,0),((140*i)+40,40),((140*i)+40,460),10)
 
 # For Draw window(Anything on window)
 def draw_window(win):
