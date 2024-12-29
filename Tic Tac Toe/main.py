@@ -23,6 +23,22 @@ game_asserts = {
     "oimage": pygame.transform.scale(pygame.image.load("img/o.png"),(110,110))
 }
 
+# Functions and Classes
+class ImageButton:
+    def __init__(self, x, y, image, width, height):
+        self.image = pygame.transform.scale(image, (width, height))
+        self.rect = self.image.get_rect()
+        self.rect.topleft = (x, y)
+        
+    def draw(self, screen):
+        screen.blit(self.image, self.rect.topleft)
+        
+    def is_clicked(self, event):
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if self.rect.collidepoint(event.pos):
+                return True
+        return False
+
 def draw_home_page(win):
     win.blit(game_asserts["homepage"],(0,0))
 
@@ -52,12 +68,6 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
-            
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_p:
-                    stack.append("gamepage")
-                if event.key == pygame.K_BACKSPACE:
-                    stack.pop()
 
         draw_window(win)
 
