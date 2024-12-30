@@ -19,8 +19,8 @@ green = (0,255,0)
 #load images
 game_asserts = {
     "homepage": pygame.transform.scale(pygame.image.load("img\homepage.jpg"),RES),
-    "ximage": pygame.image.load("img/x.png"),
-    "oimage": pygame.image.load("img/o.png"),
+    "ximage": pygame.transform.scale(pygame.image.load("img/x.png"),(100,100)),
+    "oimage": pygame.transform.scale(pygame.image.load("img/o.png"),(100,100)),
     "playbutton":pygame.image.load("img\playbutton.png")
 }
 
@@ -55,6 +55,18 @@ def draw_game_page(win):
         pygame.draw.line(win,(0,255,0),(40,(140*i)+40),(460,(140*i)+40),10)
         pygame.draw.line(win,(0,255,0),((140*i)+40,40),((140*i)+40,460),10)
 
+    for i in game_grids:
+        image = None
+        if game_grids[i]=="O":
+            image = game_asserts["oimage"]
+        elif game_grids[i]=="X":
+            image = game_asserts["ximage"]
+
+        if image:
+            x = (i[0]*140)+60
+            y = (i[1]*140)+60
+            win.blit(image,(x,y))
+
 # For Draw window(Anything on window)
 def draw_window(win):
     page = stack[-1]
@@ -85,6 +97,11 @@ def check_event(event):
 
 # Game Related Variable
 stack = []
+game_grids = {
+    (0,0): None,(0,1): None,(0,2): None,
+    (1,0): None,(1,1): None,(1,2): None,
+    (2,0): None,(2,1): None,(2,2): None
+}
 
 # Objects
 play_button = ImageButton(143,328, game_asserts["playbutton"],213,78)
