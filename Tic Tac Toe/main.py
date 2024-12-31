@@ -84,7 +84,18 @@ def check_event_of_home_page(event):
 
 # For check game page event
 def check_event_of_game_page(event):
-    pass
+    global move_count
+    
+    # For mouse button down check
+    if event.type == pygame.MOUSEBUTTONDOWN:
+        x, y = pygame.mouse.get_pos()
+        player = "O" if move_count%2==0 else "X"
+        for i,j in game_grids:
+            rect = pygame.rect.Rect(i*140+45,j*140+45,130,130)
+            if rect.collidepoint(x,y):
+                game_grids[(i,j)] = player
+                move_count += 1
+                break
 
 # For check every event
 def check_event(event):
@@ -102,6 +113,7 @@ game_grids = {
     (1,0): None,(1,1): None,(1,2): None,
     (2,0): None,(2,1): None,(2,2): None
 }
+move_count = 0
 
 # Objects
 play_button = ImageButton(143,328, game_asserts["playbutton"],213,78)
