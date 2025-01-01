@@ -25,6 +25,21 @@ game_asserts = {
 }
 
 # Functions and Classes
+def check_winner():
+    
+    # Check for a winner
+    for combination in winning_combinations:
+        values = [game_grids[pos] for pos in combination]
+        if values[0] is not None and values.count(values[0]) == len(values):
+            return values[0]  # Return the player ('X' or 'O')
+
+    # Check for a tie
+    if all(value is not None for value in game_grids.values()):
+        return "Tie"
+
+    # If there's no winner or tie, return None
+    return None
+
 class ImageButton:
     def __init__(self, x, y, image, width, height):
         self.image = pygame.transform.scale(image, (width, height))
@@ -96,6 +111,8 @@ def check_event_of_game_page(event):
                 game_grids[(i,j)] = player
                 move_count += 1
                 break
+            
+    print(check_winner())
 
 # For check every event
 def check_event(event):
@@ -114,6 +131,17 @@ game_grids = {
     (2,0): None,(2,1): None,(2,2): None
 }
 move_count = 0
+# Define the possible winning combinations
+winning_combinations = [
+    [(0, 0), (0, 1), (0, 2)],
+    [(1, 0), (1, 1), (1, 2)],
+    [(2, 0), (2, 1), (2, 2)],
+    [(0, 0), (1, 0), (2, 0)],
+    [(0, 1), (1, 1), (2, 1)],
+    [(0, 2), (1, 2), (2, 2)],
+    [(0, 0), (1, 1), (2, 2)],
+    [(0, 2), (1, 1), (2, 0)],
+]
 
 # Objects
 play_button = ImageButton(143,328, game_asserts["playbutton"],213,78)
