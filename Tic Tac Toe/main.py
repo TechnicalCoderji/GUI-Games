@@ -106,11 +106,12 @@ def check_event_of_game_page(event):
         x, y = pygame.mouse.get_pos()
         player = "O" if move_count%2==0 else "X"
         for i,j in game_grids:
-            rect = pygame.rect.Rect(i*140+45,j*140+45,130,130)
-            if rect.collidepoint(x,y):
-                game_grids[(i,j)] = player
-                move_count += 1
-                break
+            if not game_grids[(i,j)]:
+                rect = pygame.rect.Rect(i*140+45,j*140+45,130,130)
+                if rect.collidepoint(x,y):
+                    game_grids[(i,j)] = player
+                    move_count += 1
+                    break
             
     print(check_winner())
 
