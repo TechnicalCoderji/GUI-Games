@@ -91,16 +91,16 @@ def draw_game_page(win):
         pygame.draw.line(win,(0,255,0),((140*i)+40,40),((140*i)+40,460),10)
 
     for i in game_grids:
-        image = None
-        if game_grids[i]=="O":
-            image = game_asserts["oimage"]
-        elif game_grids[i]=="X":
-            image = game_asserts["ximage"]
-
+        image = game_grids[i]
         if image:
-            x = (i[0]*140)+60
-            y = (i[1]*140)+60
-            win.blit(image,(x,y))
+            if game_grids[i]=="O":
+                image = game_asserts["oimage"]
+            elif game_grids[i]=="X":
+                image = game_asserts["ximage"]
+
+                x = (i[0]*140)+60
+                y = (i[1]*140)+60
+                win.blit(image,(x,y))
     
     winner = check_winner()
     if winner:
