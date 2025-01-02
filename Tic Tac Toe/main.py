@@ -9,6 +9,10 @@ pygame.display.set_caption("tictok game by Technical Coderji")
 clock = pygame.time.Clock()
 FPS = 60
 
+# Load Minecraft-like font
+font_size = 36
+font = pygame.font.Font("Minecraft.ttf", font_size)
+
 #colour
 white = (255, 255, 255)
 black = (0, 0, 0)
@@ -25,6 +29,10 @@ game_asserts = {
 }
 
 # Functions and Classes
+def print_text(screen, text, x, y, color):
+    text_surface = font.render(text, True, color)
+    screen.blit(text_surface, (x, y))
+
 def check_winner():
     
     # Check for a winner
@@ -81,6 +89,12 @@ def draw_game_page(win):
             x = (i[0]*140)+60
             y = (i[1]*140)+60
             win.blit(image,(x,y))
+    
+    winner = check_winner()
+    if winner:
+        output_text = "O WIN THE GAME" if winner == "O" else "X WIN THE GAME" if winner == "X" else "GAME IS TIE"
+        pygame.draw.rect(win,(200,200,200),(75,200,350,100))
+        print_text(win,output_text,100,225,(0,0,0))
 
 # For Draw window(Anything on window)
 def draw_window(win):
@@ -112,8 +126,6 @@ def check_event_of_game_page(event):
                     game_grids[(i,j)] = player
                     move_count += 1
                     break
-            
-    print(check_winner())
 
 # For check every event
 def check_event(event):
