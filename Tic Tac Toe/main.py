@@ -29,9 +29,13 @@ game_asserts = {
 }
 
 # Functions and Classes
-def print_text(screen, text, x, y, color):
+def print_text(surface, text, color, x, y, width, height):
     text_surface = font.render(text, True, color)
-    screen.blit(text_surface, (x, y))
+    text_rect = text_surface.get_rect()
+    rect = pygame.Rect(x, y, width, height)
+    text_rect.center = rect.center
+    # pygame.draw.rect(surface, (0, 0, 0), rect, 2)
+    surface.blit(text_surface, text_rect)
 
 def check_winner():
     
@@ -94,7 +98,7 @@ def draw_game_page(win):
     if winner:
         output_text = "O WIN THE GAME" if winner == "O" else "X WIN THE GAME" if winner == "X" else "GAME IS TIE"
         pygame.draw.rect(win,(200,200,200),(75,200,350,100))
-        print_text(win,output_text,100,225,(0,0,0))
+        print_text(win,output_text,(0,0,0),100,210,300,50)
 
 # For Draw window(Anything on window)
 def draw_window(win):
