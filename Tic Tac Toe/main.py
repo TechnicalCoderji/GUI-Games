@@ -25,7 +25,8 @@ game_asserts = {
     "homepage": pygame.transform.scale(pygame.image.load("img\homepage.jpg"),RES),
     "ximage": pygame.transform.scale(pygame.image.load("img/x.png"),(100,100)),
     "oimage": pygame.transform.scale(pygame.image.load("img/o.png"),(100,100)),
-    "playbutton":pygame.image.load("img\playbutton.png")
+    "playbutton":pygame.image.load("img\playbutton.png"),
+    "button":pygame.image.load(f"img\\button_rectangle_depth_flat.png")
 }
 
 # Functions and Classes
@@ -53,14 +54,21 @@ def check_winner():
     return None
 
 class ImageButton:
-    def __init__(self, x, y, image, width, height):
+    def __init__(self, x, y, image, width, height, text=None, font_color=(0, 0, 0)):
         self.image = pygame.transform.scale(image, (width, height))
         self.rect = self.image.get_rect()
         self.rect.topleft = (x, y)
-        
+        self.text = text
+        self.font = font
+        self.font_color = font_color
+
     def draw(self, screen):
         screen.blit(self.image, self.rect.topleft)
-        
+        if self.text and self.font:
+            text_surface = self.font.render(self.text, True, self.font_color)
+            text_rect = text_surface.get_rect(center=self.rect.center)
+            screen.blit(text_surface, text_rect.topleft)
+
     def is_clicked(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
             if self.rect.collidepoint(event.pos):
