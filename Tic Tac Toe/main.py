@@ -92,15 +92,15 @@ def draw_game_page(win):
 
     for i in game_grids:
         image = game_grids[i]
-        if image:
-            if game_grids[i]=="O":
-                image = game_asserts["oimage"]
-            elif game_grids[i]=="X":
-                image = game_asserts["ximage"]
+        if game_grids[i]=="O":
+            image = game_asserts["oimage"]
+        elif game_grids[i]=="X":
+            image = game_asserts["ximage"]
 
-                x = (i[0]*140)+60
-                y = (i[1]*140)+60
-                win.blit(image,(x,y))
+        if image:
+            x = (i[0]*140)+60
+            y = (i[1]*140)+60
+            win.blit(image,(x,y))
     
     winner = check_winner()
     if winner:
@@ -170,6 +170,8 @@ winning_combinations = [
 
 # Objects
 play_button = ImageButton(143,328, game_asserts["playbutton"],213,78)
+home_button = ImageButton(75,100,game_asserts["button"],150,50,"HOME",(0,200,0))
+restart_button = ImageButton(225,100,game_asserts["button"],150,50,"RESTART",(0,200,0))
 
 def main():
     global stack
