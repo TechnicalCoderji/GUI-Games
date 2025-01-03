@@ -54,6 +54,9 @@ def check_winner():
     # If there's no winner or tie, return None
     return None
 
+def game_restart():
+    pass
+
 class ImageButton:
     def __init__(self, x, y, image, width, height, text=None, font=None, font_color=(0, 0, 0)):
         self.image = pygame.transform.scale(image, (width, height))
@@ -133,14 +136,21 @@ def check_event_of_game_page(event):
     # For mouse button down check
     if event.type == pygame.MOUSEBUTTONDOWN:
         x, y = pygame.mouse.get_pos()
-        player = "O" if move_count%2==0 else "X"
-        for i,j in game_grids:
-            if not game_grids[(i,j)]:
-                rect = pygame.rect.Rect(i*140+45,j*140+45,130,130)
-                if rect.collidepoint(x,y):
-                    game_grids[(i,j)] = player
-                    move_count += 1
-                    break
+        if check_winner == None:
+            player = "O" if move_count%2==0 else "X"
+            for i,j in game_grids:
+                if not game_grids[(i,j)]:
+                    rect = pygame.rect.Rect(i*140+45,j*140+45,130,130)
+                    if rect.collidepoint(x,y):
+                        game_grids[(i,j)] = player
+                        move_count += 1
+                        break
+
+        else:
+            if home_button.is_clicked:
+                stack.pop()
+            if restart_button.is_clicked:
+                game_restart()
 
 # For check every event
 def check_event(event):
