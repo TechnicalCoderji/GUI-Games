@@ -5,7 +5,7 @@ pygame.init()
 # Creating window
 RES = WIDTH, HEIGHT = 500 ,500
 win = pygame.display.set_mode(RES)
-pygame.display.set_caption("tictok game by Technical Coderji")
+pygame.display.set_caption("Tic TAC TOE Game By Technical Coderji")
 clock = pygame.time.Clock()
 FPS = 60
 
