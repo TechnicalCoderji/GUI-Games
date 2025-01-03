@@ -12,6 +12,7 @@ FPS = 60
 # Load Minecraft-like font
 font_size = 36
 font = pygame.font.Font("Minecraft.ttf", font_size)
+font_24 = pygame.font.Font("Minecraft.ttf", 24)
 
 #colour
 white = (255, 255, 255)
@@ -54,7 +55,7 @@ def check_winner():
     return None
 
 class ImageButton:
-    def __init__(self, x, y, image, width, height, text=None, font_color=(0, 0, 0)):
+    def __init__(self, x, y, image, width, height, text=None, font=None, font_color=(0, 0, 0)):
         self.image = pygame.transform.scale(image, (width, height))
         self.rect = self.image.get_rect()
         self.rect.topleft = (x, y)
@@ -107,6 +108,8 @@ def draw_game_page(win):
         output_text = "O WIN THE GAME" if winner == "O" else "X WIN THE GAME" if winner == "X" else "GAME IS TIE"
         pygame.draw.rect(win,(200,200,200),(75,200,350,100))
         print_text(win,output_text,(0,0,0),100,210,300,50)
+        home_button.draw(win)
+        restart_button.draw(win)
 
 # For Draw window(Anything on window)
 def draw_window(win):
@@ -170,8 +173,8 @@ winning_combinations = [
 
 # Objects
 play_button = ImageButton(143,328, game_asserts["playbutton"],213,78)
-home_button = ImageButton(75,100,game_asserts["button"],150,50,"HOME",(0,200,0))
-restart_button = ImageButton(225,100,game_asserts["button"],150,50,"RESTART",(0,200,0))
+home_button = ImageButton(105,250,game_asserts["button"],135,45,"HOME",font_24,(0,200,0))
+restart_button = ImageButton(265,250,game_asserts["button"],135,45,"RESTART",font_24,(0,200,0))
 
 def main():
     global stack
