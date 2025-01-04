@@ -1,20 +1,21 @@
+# import usefull modules
 import pygame
 
+# a function that initializes all imported Pygame modules
 pygame.init()
 
 # Creating window
-RES = WIDTH, HEIGHT = 500 ,500
-win = pygame.display.set_mode(RES)
-pygame.display.set_caption("Tic TAC TOE Game By Technical Coderji")
-clock = pygame.time.Clock()
-FPS = 60
+RES = WIDTH, HEIGHT = 500 ,500 # define width and height
+win = pygame.display.set_mode(RES) # make screen/window object
+pygame.display.set_caption("Tic TAC TOE Game By Technical Coderji") # set title of screen
+clock = pygame.time.Clock() # initialized clock for time and FPS
+FPS = 60 # set FPS
 
 # Load Minecraft-like font
-font_size = 36
-font = pygame.font.Font("Minecraft.ttf", font_size)
+font = pygame.font.Font("Minecraft.ttf", 36)
 font_24 = pygame.font.Font("Minecraft.ttf", 24)
 
-#colour
+#colours
 white = (255, 255, 255)
 black = (0, 0, 0)
 blue = (0,0,255)
@@ -31,6 +32,7 @@ game_asserts = {
 }
 
 # Functions and Classes
+
 def print_text(surface, text, color, x, y, width, height):
     text_surface = font.render(text, True, color)
     text_rect = text_surface.get_rect()
