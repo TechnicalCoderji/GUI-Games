@@ -23,7 +23,7 @@ red = (255,0,0)
 green = (0,255,0)
 
 #load images
-game_asserts = {
+game_assets = {
     "homepage": pygame.transform.scale(pygame.image.load("img\homepage.jpg"),RES),
     "ximage": pygame.transform.scale(pygame.image.load("img/x.png"),(100,100)),
     "oimage": pygame.transform.scale(pygame.image.load("img/o.png"),(100,100)),
@@ -90,7 +90,7 @@ class ImageButton:
 
 # For Draw Homepage
 def draw_home_page(win):
-    win.blit(game_asserts["homepage"],(0,0))
+    win.blit(game_assets["homepage"],(0,0))
     play_button.draw(win)
 
 # For Draw Main Game Page
@@ -106,9 +106,9 @@ def draw_game_page(win):
     for i in game_grids:
         image = game_grids[i]
         if game_grids[i]=="O":
-            image = game_asserts["oimage"]
+            image = game_assets["oimage"]
         elif game_grids[i]=="X":
-            image = game_asserts["ximage"]
+            image = game_assets["ximage"]
 
         if image:
             x = (i[0]*140)+60
@@ -193,9 +193,9 @@ winning_combinations = [
 ]
 
 # Objects
-play_button = ImageButton(143,328, game_asserts["playbutton"],213,78)
-home_button = ImageButton(105,250,game_asserts["button"],135,45,"HOME",font_24,(0,200,0))
-restart_button = ImageButton(265,250,game_asserts["button"],135,45,"RESTART",font_24,(0,200,0))
+play_button = ImageButton(143,328, game_assets["playbutton"],213,78)
+home_button = ImageButton(105,250,game_assets["button"],135,45,"HOME",font_24,(0,200,0))
+restart_button = ImageButton(265,250,game_assets["button"],135,45,"RESTART",font_24,(0,200,0))
 
 def main():
     global stack
