@@ -1,11 +1,12 @@
 # import usefull modules
 import pygame
+from load_assets import assets
 
 # a function that initializes all imported Pygame modules
 pygame.init()
 
 # Creating window
-RES = WIDTH, HEIGHT = 500 ,500 # define width and height
+RES = WIDTH, HEIGHT = 400 ,600 # define width and height
 win = pygame.display.set_mode(RES) # make screen/window object
 pygame.display.set_caption("Tic TAC TOE Game By Technical Coderji") # set title of screen
 clock = pygame.time.Clock() # initialized clock for time and FPS
@@ -90,7 +91,8 @@ class ImageButton:
 
 # For Draw Homepage
 def draw_home_page(win):
-    win.blit(game_assets["homepage"],(0,0))
+    win.fill((51, 153, 218))
+
     play_button.draw(win)
 
 # For Draw Main Game Page
@@ -134,9 +136,7 @@ def draw_window(win):
 
 # For check home page event
 def check_event_of_home_page(event):
-    
-    if play_button.is_clicked(event):
-        stack.append("gamepage")
+    pass
 
 # For check game page event
 def check_event_of_game_page(event):
@@ -193,7 +193,7 @@ winning_combinations = [
 ]
 
 # Objects
-play_button = ImageButton(143,328, game_assets["playbutton"],213,78)
+play_button = ImageButton(143,328, assets["Green"]["button_rectangle_depth_flat"],213,78)
 home_button = ImageButton(105,250,game_assets["button"],135,45,"HOME",font_24,(0,200,0))
 restart_button = ImageButton(265,250,game_assets["button"],135,45,"RESTART",font_24,(0,200,0))
 
