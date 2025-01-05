@@ -124,8 +124,6 @@ def draw_game_page(win):
         output_text = "O WIN THE GAME" if winner == "O" else "X WIN THE GAME" if winner == "X" else "GAME IS TIE"
         pygame.draw.rect(win,(200,200,200),(75,200,350,100))
         print_text(win,output_text,(0,0,0),100,210,300,50)
-        home_button.draw(win)
-        restart_button.draw(win)
 
 # For Draw window(Anything on window)
 def draw_window(win):
@@ -138,7 +136,15 @@ def draw_window(win):
 
 # For check home page event
 def check_event_of_home_page(event):
-    pass
+    
+    if two_play_button.is_clicked(event):
+        print("two")
+
+    elif com_play_button.is_clicked(event):
+        print("com")
+
+    elif online_play_button.is_clicked(event):
+        print("online")
 
 # For check game page event
 def check_event_of_game_page(event):
@@ -156,14 +162,6 @@ def check_event_of_game_page(event):
                         game_grids[(i,j)] = player
                         move_count += 1
                         break
-
-        else:
-            if home_button.is_clicked(event):
-                game_restart()
-                stack.pop()
-
-            elif restart_button.is_clicked(event):
-                game_restart()
 
 # For check every event
 def check_event(event):
@@ -198,9 +196,6 @@ winning_combinations = [
 two_play_button = ImageButton(95, 265, assets["Green"]["button_rectangle_depth_flat"],210,70,"VS Player",get_font(fonts[0],25),white)
 com_play_button = ImageButton(95, 345, assets["Green"]["button_rectangle_depth_flat"],210,70,"VS Computer",get_font(fonts[0],25),white)
 online_play_button = ImageButton(95, 425, assets["Green"]["button_rectangle_depth_flat"],210,70,"Online Play",get_font(fonts[0],25),white)
-
-home_button = ImageButton(105,250,game_assets["button"],135,45,"HOME",get_font(fonts[0],24),(0,200,0))
-restart_button = ImageButton(265,250,game_assets["button"],135,45,"RESTART",get_font(fonts[0],24),(0,200,0))
 
 def main():
     global stack
