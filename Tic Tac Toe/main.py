@@ -12,9 +12,7 @@ pygame.display.set_caption("Tic TAC TOE Game By Technical Coderji") # set title 
 clock = pygame.time.Clock() # initialized clock for time and FPS
 FPS = 60 # set FPS
 
-# Load Minecraft-like font
-font = pygame.font.Font("Minecraft.ttf", 36)
-font_24 = pygame.font.Font("Minecraft.ttf", 24)
+fonts = ["Minecraft.ttf",]
 
 #colours
 white = (255, 255, 255)
@@ -33,8 +31,10 @@ game_assets = {
 }
 
 # Functions and Classes
+def get_font(font,size):
+    return pygame.font.Font(font,size)
 
-def print_text(surface, text, color, x, y, width, height):
+def print_text(surface, text, color, x, y, width, height,font):
     text_surface = font.render(text, True, color)
     text_rect = text_surface.get_rect()
     rect = pygame.Rect(x, y, width, height)
@@ -93,7 +93,7 @@ class ImageButton:
 def draw_home_page(win):
     win.fill((51, 153, 218))
 
-    play_button.draw(win)
+    two_play_button.draw(win)
 
 # For Draw Main Game Page
 def draw_game_page(win):
@@ -193,9 +193,9 @@ winning_combinations = [
 ]
 
 # Objects
-play_button = ImageButton(143,328, assets["Green"]["button_rectangle_depth_flat"],213,78)
-home_button = ImageButton(105,250,game_assets["button"],135,45,"HOME",font_24,(0,200,0))
-restart_button = ImageButton(265,250,game_assets["button"],135,45,"RESTART",font_24,(0,200,0))
+two_play_button = ImageButton(95, 265, assets["Green"]["button_rectangle_depth_flat"],210,70,"Two Player",get_font(fonts[0],30),black)
+home_button = ImageButton(105,250,game_assets["button"],135,45,"HOME",get_font(fonts[0],24),(0,200,0))
+restart_button = ImageButton(265,250,game_assets["button"],135,45,"RESTART",get_font(fonts[0],24),(0,200,0))
 
 def main():
     global stack
