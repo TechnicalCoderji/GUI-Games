@@ -6,7 +6,7 @@ from load_assets import assets
 pygame.init()
 
 # Creating window
-RES = WIDTH, HEIGHT = 400 ,600 # define width and height
+RES = WIDTH, HEIGHT = 400 ,550 # define width and height
 win = pygame.display.set_mode(RES) # make screen/window object
 pygame.display.set_caption("Tic TAC TOE Game By Technical Coderji") # set title of screen
 clock = pygame.time.Clock() # initialized clock for time and FPS
@@ -95,6 +95,7 @@ def draw_home_page(win):
 
     two_play_button.draw(win)
     com_play_button.draw(win)
+    online_play_button.draw(win)
 
 # For Draw Main Game Page
 def draw_game_page(win):
@@ -194,8 +195,10 @@ winning_combinations = [
 ]
 
 # Objects
-two_play_button = ImageButton(95, 265, assets["Green"]["button_rectangle_depth_flat"],210,70,"Two Player",get_font(fonts[0],30),black)
-com_play_button = ImageButton(95, 345, assets["Green"]["button_rectangle_depth_flat"],210,70,"Play With Computer",get_font(fonts[0],20),black)
+two_play_button = ImageButton(95, 265, assets["Green"]["button_rectangle_depth_flat"],210,70,"VS Player",get_font(fonts[0],25),white)
+com_play_button = ImageButton(95, 345, assets["Green"]["button_rectangle_depth_flat"],210,70,"VS Computer",get_font(fonts[0],25),white)
+online_play_button = ImageButton(95, 425, assets["Green"]["button_rectangle_depth_flat"],210,70,"Online Play",get_font(fonts[0],25),white)
+
 home_button = ImageButton(105,250,game_assets["button"],135,45,"HOME",get_font(fonts[0],24),(0,200,0))
 restart_button = ImageButton(265,250,game_assets["button"],135,45,"RESTART",get_font(fonts[0],24),(0,200,0))
 
