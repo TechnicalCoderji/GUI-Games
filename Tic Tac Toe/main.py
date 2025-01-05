@@ -94,6 +94,7 @@ def draw_home_page(win):
     win.fill((51, 153, 218))
 
     two_play_button.draw(win)
+    com_play_button.draw(win)
 
 # For Draw Main Game Page
 def draw_game_page(win):
@@ -194,6 +195,7 @@ winning_combinations = [
 
 # Objects
 two_play_button = ImageButton(95, 265, assets["Green"]["button_rectangle_depth_flat"],210,70,"Two Player",get_font(fonts[0],30),black)
+com_play_button = ImageButton(95, 345, assets["Green"]["button_rectangle_depth_flat"],210,70,"Play With Computer",get_font(fonts[0],20),black)
 home_button = ImageButton(105,250,game_assets["button"],135,45,"HOME",get_font(fonts[0],24),(0,200,0))
 restart_button = ImageButton(265,250,game_assets["button"],135,45,"RESTART",get_font(fonts[0],24),(0,200,0))
 
