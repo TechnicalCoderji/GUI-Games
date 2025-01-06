@@ -16,10 +16,10 @@ fonts = ["Minecraft.ttf",]
 
 #colours
 white = (255, 255, 255)
-black = (0, 0, 0)
-blue = (0,0,255)
-red = (255,0,0)
+black = (0,0,0)
 green = (0,255,0)
+red = (255,0,0)
+yellow = (255,255,0)
 
 #load images
 game_assets = {
@@ -97,33 +97,49 @@ def draw_home_page(win):
     com_play_button.draw(win)
     online_play_button.draw(win)
 
+# For Draw O
+def draw_O(win,x,y,width):
+    radius = width//2
+    center = (x+radius,y+radius)
+    pygame.draw.circle(win,green,center,radius-5,10)
+
+# For Draw X
+def draw_X(win,x,y,width):
+    pygame.draw.line(win,red,(x+10,y+10),(x+width-10,y+width-10),13)
+    pygame.draw.line(win,red,(x+10,y+width-10),(x+width-10,y+10),13)
+
 # For Draw Main Game Page
 def draw_game_page(win):
-    win.fill((0,0,0))
-
-    pygame.draw.rect(win,(252, 186, 3),(0,0,*RES),40)
+    win.fill((51,153,218))
 
     for i in range(1,3):
-        pygame.draw.line(win,(0,255,0),(40,(140*i)+40),(460,(140*i)+40),10)
-        pygame.draw.line(win,(0,255,0),((140*i)+40,40),((140*i)+40,460),10)
+        # For Horizontal lines
+        pygame.draw.line(win,white,(20,(120*i)+20),(380,(120*i)+20),10)
+        pygame.draw.circle(win,white,(20,(120*i)+21),5)
+        pygame.draw.circle(win,white,(380,(120*i)+21),5)
+
+        # For Vertical lines
+        pygame.draw.line(win,white,((120*i)+20,20),((120*i)+20,380),10)
+        pygame.draw.circle(win,white,((120*i)+21,20),5)
+        pygame.draw.circle(win,white,((120*i)+21,380),5)
 
     for i in game_grids:
-        image = game_grids[i]
-        if game_grids[i]=="O":
-            image = game_assets["oimage"]
-        elif game_grids[i]=="X":
-            image = game_assets["ximage"]
+        
+        # Position for each O and X in cordinate (x,y)
+        x = (i[0]*120)+31
+        y = (i[1]*120)+31
 
-        if image:
-            x = (i[0]*140)+60
-            y = (i[1]*140)+60
-            win.blit(image,(x,y))
+        # For drawing X or O on screen
+        if game_grids[i] == "O":
+            draw_O(win,x,y,100)
+        elif game_grids[i] == "X":
+            draw_X(win,x,y,100)
+
+    pygame.draw.rect(win,(100,100,100),(0,400,WIDTH,200))
     
     winner = check_winner()
     if winner:
         output_text = "O WIN THE GAME" if winner == "O" else "X WIN THE GAME" if winner == "X" else "GAME IS TIE"
-        pygame.draw.rect(win,(200,200,200),(75,200,350,100))
-        print_text(win,output_text,(0,0,0),100,210,300,50)
 
 # For Draw window(Anything on window)
 def draw_window(win):
@@ -151,17 +167,16 @@ def check_event_of_game_page(event):
     global move_count
     
     # For mouse button down check
-    if event.type == pygame.MOUSEBUTTONDOWN:
+    if event.type == pygame.MOUSEBUTTONDOWN and check_winner() == None:
         x, y = pygame.mouse.get_pos()
-        if check_winner() == None:
-            player = "O" if move_count%2==0 else "X"
-            for i,j in game_grids:
-                if not game_grids[(i,j)]:
-                    rect = pygame.rect.Rect(i*140+45,j*140+45,130,130)
-                    if rect.collidepoint(x,y):
-                        game_grids[(i,j)] = player
-                        move_count += 1
-                        break
+        player = "O" if move_count%2==0 else "X"
+        for i,j in game_grids:
+            if not game_grids[(i,j)]:
+                rect = pygame.rect.Rect(i*120+31,j*120+31,100,100)
+                if rect.collidepoint(x,y):
+                    game_grids[(i,j)] = player
+                    move_count += 1
+                    break
 
 # For check every event
 def check_event(event):
