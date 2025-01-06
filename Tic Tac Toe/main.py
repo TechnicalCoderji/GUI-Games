@@ -138,7 +138,7 @@ def draw_window(win):
 def check_event_of_home_page(event):
     
     if two_play_button.is_clicked(event):
-        print("two")
+        stack.append("gamepage")
 
     elif com_play_button.is_clicked(event):
         print("com")
