@@ -67,6 +67,15 @@ def game_restart():
     (2,0): None,(2,1): None,(2,2): None
     }
 
+class GetImage:
+    def __init__(self,rect_value,image):
+        self.x = rect_value[0]
+        self.y = rect_value[1]
+        self.image = pygame.transform.scale(image,(rect_value[2:4]))
+
+    def draw(self,screen):
+        screen.blit(self.image,(self.x,self.y))
+
 class ImageButton:
     def __init__(self, x, y, image, width, height, text=None, font=None, font_color=(0, 0, 0)):
         self.image = pygame.transform.scale(image, (width, height))
@@ -136,7 +145,8 @@ def draw_game_page(win):
             draw_X(win,x,y,100)
 
     pygame.draw.rect(win,(100,100,100),(0,400,WIDTH,200))
-    
+    clock_bg.draw(win)
+
     winner = check_winner()
     if winner:
         output_text = "O WIN THE GAME" if winner == "O" else "X WIN THE GAME" if winner == "X" else "GAME IS TIE"
@@ -211,6 +221,9 @@ winning_combinations = [
 two_play_button = ImageButton(95, 265, assets["Green"]["button_rectangle_depth_flat"],210,70,"VS Player",get_font(fonts[0],25),white)
 com_play_button = ImageButton(95, 345, assets["Green"]["button_rectangle_depth_flat"],210,70,"VS Computer",get_font(fonts[0],25),white)
 online_play_button = ImageButton(95, 425, assets["Green"]["button_rectangle_depth_flat"],210,70,"Online Play",get_font(fonts[0],25),white)
+
+# IMAGES
+clock_bg = GetImage((WIDTH-135,415,120,120),assets["Green"]["button_round_border"])
 
 def main():
     global stack
