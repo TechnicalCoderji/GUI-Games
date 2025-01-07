@@ -125,12 +125,16 @@ def draw_game_page(win):
     pygame.draw.rect(win,(100,100,100),(0,400,WIDTH,200))
     clock_bg.draw(win)
 
-    timer_10_sec.update()
     timer_10_sec.draw(win)
+
+    text_to_blit = "O's move" if move_count%2==0 else "X's move"
+    print_text(win,text_to_blit,white,30,430,200,100,get_font(fonts[0],50))
 
     winner = check_winner()
     if winner:
         output_text = "O WIN THE GAME" if winner == "O" else "X WIN THE GAME" if winner == "X" else "GAME IS TIE"
+    else:
+        timer_10_sec.update()
 
 # For Draw window(Anything on window)
 def draw_window(win):
@@ -179,11 +183,8 @@ def check_event(event):
 
 # Game Related Variable
 stack = []
-game_grids = {
-    (0,0): None,(0,1): None,(0,2): None,
-    (1,0): None,(1,1): None,(1,2): None,
-    (2,0): None,(2,1): None,(2,2): None
-}
+game_grids = {(i, j): None for i in range(3) for j in range(3)}
+
 move_count = 0
 # Define the possible winning combinations
 winning_combinations = [
