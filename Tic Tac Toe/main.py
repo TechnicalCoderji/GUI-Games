@@ -1,6 +1,7 @@
 # import usefull modules
 import pygame
 from load_assets import assets
+from classes import *
 
 # a function that initializes all imported Pygame modules
 pygame.init()
@@ -57,6 +58,7 @@ def check_winner():
     # If there's no winner or tie, return None
     return None
 
+# For restarting game
 def game_restart():
     global move_count, game_grids
 
@@ -67,36 +69,12 @@ def game_restart():
     (2,0): None,(2,1): None,(2,2): None
     }
 
-class GetImage:
-    def __init__(self,rect_value,image):
-        self.x = rect_value[0]
-        self.y = rect_value[1]
-        self.image = pygame.transform.scale(image,(rect_value[2:4]))
+# For shifting move
+def shift_move():
+    global move_count
 
-    def draw(self,screen):
-        screen.blit(self.image,(self.x,self.y))
-
-class ImageButton:
-    def __init__(self, x, y, image, width, height, text=None, font=None, font_color=(0, 0, 0)):
-        self.image = pygame.transform.scale(image, (width, height))
-        self.rect = self.image.get_rect()
-        self.rect.topleft = (x, y)
-        self.text = text
-        self.font = font
-        self.font_color = font_color
-
-    def draw(self, screen):
-        screen.blit(self.image, self.rect.topleft)
-        if self.text and self.font:
-            text_surface = self.font.render(self.text, True, self.font_color)
-            text_rect = text_surface.get_rect(center=self.rect.center)
-            screen.blit(text_surface, text_rect.topleft)
-
-    def is_clicked(self, event):
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            if self.rect.collidepoint(event.pos):
-                return True
-        return False
+    move_count += 1
+    timer_10_sec.restart()
 
 # For Draw Homepage
 def draw_home_page(win):
@@ -147,6 +125,9 @@ def draw_game_page(win):
     pygame.draw.rect(win,(100,100,100),(0,400,WIDTH,200))
     clock_bg.draw(win)
 
+    timer_10_sec.update()
+    timer_10_sec.draw(win)
+
     winner = check_winner()
     if winner:
         output_text = "O WIN THE GAME" if winner == "O" else "X WIN THE GAME" if winner == "X" else "GAME IS TIE"
@@ -174,7 +155,6 @@ def check_event_of_home_page(event):
 
 # For check game page event
 def check_event_of_game_page(event):
-    global move_count
     
     # For mouse button down check
     if event.type == pygame.MOUSEBUTTONDOWN and check_winner() == None:
@@ -185,7 +165,7 @@ def check_event_of_game_page(event):
                 rect = pygame.rect.Rect(i*120+31,j*120+31,100,100)
                 if rect.collidepoint(x,y):
                     game_grids[(i,j)] = player
-                    move_count += 1
+                    shift_move()
                     break
 
 # For check every event
@@ -224,6 +204,9 @@ online_play_button = ImageButton(95, 425, assets["Green"]["button_rectangle_dept
 
 # IMAGES
 clock_bg = GetImage((WIDTH-135,415,120,120),assets["Green"]["button_round_border"])
+
+# Timer clock
+timer_10_sec = Timer(10,WIDTH-75,475,80,80,(252, 211, 3),shift_move)
 
 def main():
     global stack
