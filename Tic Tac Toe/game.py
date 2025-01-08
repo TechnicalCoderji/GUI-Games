@@ -1,5 +1,6 @@
 # module for Game Page
-from core import *
+import pygame
+from core import GetImage,WIDTH,assets,red,green,white,print_text,get_font,fonts,Timer
 
 # variables
 game_grids = {(i, j): None for i in range(3) for j in range(3)}
@@ -30,6 +31,17 @@ def draw_O(win,x,y,width):
 def draw_X(win,x,y,width):
     pygame.draw.line(win,red,(x+10,y+10),(x+width-10,y+width-10),13)
     pygame.draw.line(win,red,(x+10,y+width-10),(x+width-10,y+10),13)
+
+# For restarting game
+def game_restart():
+    global move_count, game_grids
+
+    move_count = 0
+    game_grids = {
+    (0,0): None,(0,1): None,(0,2): None,
+    (1,0): None,(1,1): None,(1,2): None,
+    (2,0): None,(2,1): None,(2,2): None
+    }
 
 # For shifting move
 def shift_move():

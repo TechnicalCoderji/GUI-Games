@@ -2,7 +2,12 @@ import pygame
 import math
 from load_assets import assets
 
+pygame.init()
+
 # Variables
+
+# Game Related Variable
+stack = []
 
 # colors
 green = (0,255,0)
@@ -51,7 +56,7 @@ class Timer:
         self.height = height
         self.color = color
         self.callback = callback
-        self.running = True
+        self.running = False
 
     def restart(self):
         self.start_time = pygame.time.get_ticks()
