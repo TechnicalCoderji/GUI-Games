@@ -147,9 +147,13 @@ def draw_window(win):
 
 # For check home page event
 def check_event_of_home_page(event):
+    global timer_10_sec
     
     if two_play_button.is_clicked(event):
         stack.append("gamepage")
+
+        # Timer clock
+        timer_10_sec = Timer(10,WIDTH-75,475,80,80,(252, 211, 3),shift_move)
 
     elif com_play_button.is_clicked(event):
         print("com")
@@ -205,9 +209,6 @@ online_play_button = ImageButton(95, 425, assets["Green"]["button_rectangle_dept
 
 # IMAGES
 clock_bg = GetImage((WIDTH-135,415,120,120),assets["Green"]["button_round_border"])
-
-# Timer clock
-timer_10_sec = Timer(10,WIDTH-75,475,80,80,(252, 211, 3),shift_move)
 
 def main():
     global stack
