@@ -1,9 +1,10 @@
 # import usefull modules
 import pygame
-from core import RES,stack
-from game import *
-from home import *
 
+from core import RES,stack
+from game import draw_game_page,check_event_of_game_page
+from home import draw_home_page,check_event_of_home_page
+from computer import draw_vs_com_game_page,check_event_of_vs_com_game_page
 # a function that initializes all imported Pygame modules
 pygame.init()
 
@@ -21,6 +22,8 @@ def draw_window(win):
         draw_home_page(win)
     elif page == "gamepage":
         draw_game_page(win)
+    elif page == "vscomgame":
+        draw_vs_com_game_page(win)
 
 # For check every event
 def check_event(event):
@@ -30,6 +33,8 @@ def check_event(event):
         check_event_of_home_page(event)
     elif page == "gamepage":
         check_event_of_game_page(event)
+    elif page == "vscomgame":
+        check_event_of_vs_com_game_page(event)
 
 def main():
     global stack

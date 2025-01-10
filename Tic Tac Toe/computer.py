@@ -71,7 +71,7 @@ def check_winner():
     return None
 
 # For check game page event
-def check_event_of_game_page(event):
+def check_event_of_vs_com_game_page(event):
     
     # For mouse button down check
     if event.type == pygame.MOUSEBUTTONDOWN and check_winner() == None:
@@ -86,7 +86,7 @@ def check_event_of_game_page(event):
                     break
 
 # For Draw Main Game Page
-def draw_game_page(win):
+def draw_vs_com_game_page(win):
     win.fill((51,153,218))
 
     for i in range(1,3):

@@ -1,5 +1,6 @@
 # import usefull modules
 import pygame
+
 from core import ImageButton,get_font,fonts,assets,white,stack
 from game import timer_10_sec
 
@@ -24,7 +25,7 @@ def check_event_of_home_page(event):
         timer_10_sec.restart()
 
     elif com_play_button.is_clicked(event):
-        print("com")
+        stack.append("vscomgame")
 
     elif online_play_button.is_clicked(event):
         print("online")
