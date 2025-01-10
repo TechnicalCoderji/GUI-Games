@@ -35,12 +35,10 @@ game_assets = {
 def get_font(font,size):
     return pygame.font.Font(font,size)
 
-def print_text(surface, text, color, x, y, width, height,font):
+def print_text(surface, text, color, x, y,font):
     text_surface = font.render(text, True, color)
     text_rect = text_surface.get_rect()
-    rect = pygame.Rect(x, y, width, height)
-    text_rect.center = rect.center
-    # pygame.draw.rect(surface, (0, 0, 0), rect, 2)
+    text_rect.topleft = (x,y)
     surface.blit(text_surface, text_rect)
 
 # Classes

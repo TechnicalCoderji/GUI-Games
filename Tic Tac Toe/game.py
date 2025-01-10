@@ -1,11 +1,22 @@
 # module for Game Page
 import pygame
 
-from core import GetImage,WIDTH,assets,red,green,white,print_text,get_font,fonts,Timer
+from core import GetImage,WIDTH,HEIGHT,assets,red,green,white,print_text,get_font,fonts,Timer
+
+# Initilize pygame
+pygame.init()
 
 # variables
 game_grids = {(i, j): None for i in range(3) for j in range(3)}
 move_count = 0
+game_state = "pause"
+
+# Define a color with an alpha value (RGBA)
+transparent_color = (0, 0, 0, 150)  # Green with 50% transparency
+
+# Create a surface with transparency
+transparent_surface = pygame.Surface((WIDTH,HEIGHT), pygame.SRCALPHA)
+transparent_surface.fill(transparent_color)
 
 # Define the possible winning combinations
 winning_combinations = [
@@ -21,6 +32,7 @@ winning_combinations = [
 
 # IMAGES
 clock_bg = GetImage((WIDTH-135,415,120,120),assets["Green"]["button_round_border"])
+pause_bg = GetImage((20,215,360,120),assets["Yellow"]["button_rectangle_border"])
 
 # For Draw O
 def draw_O(win,x,y,width):
@@ -70,20 +82,34 @@ def check_winner():
     # If there's no winner or tie, return None
     return None
 
+# For stop game
+def draw_pause_menu(win):
+    global game_state
+    game_state = "win" if check_winner() else "running" if game_state!="pause" else "pause"
+
+    if game_state != "running":
+        win.blit(transparent_surface,(0,0))
+        pause_bg.draw(win)
+
+        if game_state == "pause":
+            print_text(win,"Pause",(0,0,0),100,200,get_font(fonts[0],50))
+    
+
 # For check game page event
 def check_event_of_game_page(event):
     
     # For mouse button down check
-    if event.type == pygame.MOUSEBUTTONDOWN and check_winner() == None:
+    if event.type == pygame.MOUSEBUTTONDOWN:
         x, y = pygame.mouse.get_pos()
-        player = "O" if move_count%2==0 else "X"
-        for i,j in game_grids:
-            if not game_grids[(i,j)]:
-                rect = pygame.rect.Rect(i*120+31,j*120+31,100,100)
-                if rect.collidepoint(x,y):
-                    game_grids[(i,j)] = player
-                    shift_move()
-                    break
+        if game_state == "running":
+            player = "O" if move_count%2==0 else "X"
+            for i,j in game_grids:
+                if not game_grids[(i,j)]:
+                    rect = pygame.rect.Rect(i*120+31,j*120+31,100,100)
+                    if rect.collidepoint(x,y):
+                        game_grids[(i,j)] = player
+                        shift_move()
+                        break
 
 # For Draw Main Game Page
 def draw_game_page(win):
@@ -114,17 +140,17 @@ def draw_game_page(win):
 
     pygame.draw.rect(win,(100,100,100),(0,400,WIDTH,200))
     clock_bg.draw(win)
-
     timer_10_sec.draw(win)
 
-    winner = check_winner()
-    if winner:
-        timer_10_sec.running = False
-        output_text = "O WIN THE GAME" if winner == "O" else "X WIN THE GAME" if winner == "X" else "GAME IS TIE"
-    else:
+    if game_state == "running":
         timer_10_sec.update()
         text_to_blit = "O's move" if move_count%2==0 else "X's move"
-        print_text(win,text_to_blit,white,30,400,200,100,get_font(fonts[0],50))
+        print_text(win,text_to_blit,white,30,430,get_font(fonts[0],50))
+
+    else:
+        timer_10_sec.running = False
+
+    draw_pause_menu(win)
 
 if __name__ == "__main__":
     pass
