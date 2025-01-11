@@ -2,7 +2,6 @@
 import pygame
 
 from core import ImageButton,get_font,fonts,assets,white,stack
-from game import timer_10_sec
 
 # Objects
 two_play_button = ImageButton(95, 265, assets["Green"]["button_rectangle_depth_flat"],210,70,"VS Player",get_font(fonts[0],25),white)
@@ -22,7 +21,6 @@ def check_event_of_home_page(event):
     
     if two_play_button.is_clicked(event):
         stack.append("gamepage")
-        timer_10_sec.restart()
 
     elif com_play_button.is_clicked(event):
         print("vscomgame")
