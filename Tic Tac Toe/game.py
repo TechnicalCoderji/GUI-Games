@@ -1,7 +1,7 @@
 # module for Game Page
 import pygame
 
-from core import GetImage,WIDTH,HEIGHT,assets,red,green,white,print_text,get_font,fonts,Timer
+from core import GetImage,WIDTH,HEIGHT,assets,red,green,white,print_text,get_font,fonts,Timer,ImageButton
 
 # Initilize pygame
 pygame.init()
@@ -9,7 +9,7 @@ pygame.init()
 # variables
 game_grids = {(i, j): None for i in range(3) for j in range(3)}
 move_count = 0
-game_state = "pause"
+game_state = "running"
 
 # Define a color with an alpha value (RGBA)
 transparent_color = (0, 0, 0, 150)  # Green with 50% transparency
@@ -33,6 +33,15 @@ winning_combinations = [
 # IMAGES
 clock_bg = GetImage((WIDTH-135,415,120,120),assets["Green"]["button_round_border"])
 pause_bg = GetImage((20,215,360,120),assets["Yellow"]["button_rectangle_border"])
+
+# Buttons
+home_button = ImageButton(50,275,assets["Yellow"]["button_rectangle_depth_flat"],90,30,"Home",get_font(fonts[0],19),(0,0,0))
+
+restart_button = ImageButton(155,275,assets["Yellow"]["button_rectangle_depth_flat"],90,30,"Restart",get_font(fonts[0],19),(0,0,0))
+
+continue_button = ImageButton(260,275,assets["Yellow"]["button_rectangle_depth_flat"],90,30,"Continue",get_font(fonts[0],19),(0,0,0))
+
+pause_button = ImageButton(20,480,assets["Yellow"]["button_square_depth_flat"],50,50,"| |",get_font(fonts[0],30),(0,0,0))
 
 # For Draw O
 def draw_O(win,x,y,width):
@@ -92,7 +101,11 @@ def draw_pause_menu(win):
         pause_bg.draw(win)
 
         if game_state == "pause":
-            print_text(win,"Pause",(0,0,0),100,200,get_font(fonts[0],50))
+            print_text(win,"Pause",(0,0,0),140,235,get_font(fonts[0],35))
+
+            home_button.draw(win)
+            restart_button.draw(win)
+            continue_button.draw(win)
     
 
 # For check game page event
@@ -141,11 +154,12 @@ def draw_game_page(win):
     pygame.draw.rect(win,(100,100,100),(0,400,WIDTH,200))
     clock_bg.draw(win)
     timer_10_sec.draw(win)
+    pause_button.draw(win)
 
     if game_state == "running":
         timer_10_sec.update()
         text_to_blit = "O's move" if move_count%2==0 else "X's move"
-        print_text(win,text_to_blit,white,30,430,get_font(fonts[0],50))
+        print_text(win,text_to_blit,white,20,425,get_font(fonts[0],50))
 
     else:
         timer_10_sec.running = False
