@@ -34,17 +34,17 @@ winning_combinations = [
 pause_bg = GetImage((20,215,360,120),assets["Yellow"]["button_rectangle_border"])
 
 # Buttons
-home_button = ImageButton(50,280,assets["Blue"]["button_rectangle_depth_flat"],90,30,"Home",get_font(fonts[0],19),(0,0,0))
+home_button = ImageButton(50,280,assets["Blue"]["button_rectangle_depth_flat"],90,30,"Home",get_font(fonts[0],17),(0,0,0))
 
-restart_button = ImageButton(155,280,assets["Green"]["button_rectangle_depth_flat"],90,30,"Restart",get_font(fonts[0],19),(0,0,0))
+restart_button = ImageButton(155,280,assets["Green"]["button_rectangle_depth_flat"],90,30,"Restart",get_font(fonts[0],17),(0,0,0))
 
-continue_button = ImageButton(260,280,assets["Yellow"]["button_rectangle_depth_flat"],90,30,"Continue",get_font(fonts[0],19),(0,0,0))
+continue_button = ImageButton(260,280,assets["Yellow"]["button_rectangle_depth_flat"],90,30,"Continue",get_font(fonts[0],17),(0,0,0))
 
 pause_button = ImageButton(20,470,assets["Yellow"]["button_square_depth_flat"],60,60,"| |",get_font(fonts[0],30),(0,0,0))
 
-home_1_button = ImageButton(90,280,assets["Blue"]["button_rectangle_depth_flat"],90,30,"Home",get_font(fonts[0],19),(0,0,0))
+home_1_button = ImageButton(90,280,assets["Blue"]["button_rectangle_depth_flat"],90,30,"Home",get_font(fonts[0],17),(0,0,0))
 
-replay_button = ImageButton(220,280,assets["Green"]["button_rectangle_depth_flat"],90,30,"Replay",get_font(fonts[0],19),(0,0,0))
+replay_button = ImageButton(220,280,assets["Green"]["button_rectangle_depth_flat"],90,30,"Replay",get_font(fonts[0],17),(0,0,0))
 
 # For Draw O
 def draw_O(win,x,y,width):
