@@ -50,7 +50,7 @@ replay_button = ImageButton(220,280,assets["Green"]["button_rectangle_depth_flat
 def draw_O(win,x,y,width):
     radius = width//2
     center = (x+radius,y+radius)
-    pygame.draw.circle(win,green,center,radius-5,10)
+    pygame.draw.circle(win,(0,0,255),center,radius-5,10)
 
 # For Draw X
 def draw_X(win,x,y,width):

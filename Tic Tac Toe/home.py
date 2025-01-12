@@ -1,7 +1,7 @@
 # import usefull modules
 import pygame
 
-from core import ImageButton,get_font,fonts,assets,white,stack,red,green
+from core import ImageButton,get_font,fonts,assets,white,stack,red,print_text
 
 # Initilize pygame
 pygame.init()
@@ -11,18 +11,37 @@ two_play_button = ImageButton(95, 265, assets["Green"]["button_rectangle_depth_f
 com_play_button = ImageButton(95, 345, assets["Green"]["button_rectangle_depth_flat"],210,70,"VS Computer",get_font(fonts[0],25),white)
 online_play_button = ImageButton(95, 425, assets["Green"]["button_rectangle_depth_flat"],210,70,"Online Play",get_font(fonts[0],25),white)
 
+# For Demo Animation
+class TicTacToeBoard:
+    def __init__(self):
+        self.board = {(0,0): None, (0,1): None, (0,2): None,
+                      (1,0): None, (1,1): None, (1,2): None,
+                      (2,0): None, (2,1): None, (2,2): None}
+        self.values = ["O", "X", "O", "X", "O", "X", "Tic", "Tac", "Toe"]
+        self.positions = [(0,1),(0,2),(1,2),(1,0),(2,0),(2,1),(0,0),(1,1),(2,2)]
+        self.call_count = 0
+
+    def insert_value(self):
+        if self.call_count < len(self.values):
+            pos = self.positions[self.call_count]
+            self.board[pos] = self.values[self.call_count]
+        elif self.call_count == 9:
+            for key in self.board:
+                self.board[key] = None
+            self.call_count = -1
+        self.call_count += 1
+        return self.board
+
 # Variables
 demo_game_grid = {(i, j): None for i in range(3) for j in range(3)}
-demo_game_grid = {(0,0):None,(0,1):"O",(0,2):"X",
-                  (1,0):"X",(1,1):None,(1,2):"O",
-                  (2,0):"O",(2,1):"X",(2,2):None}
 start_ticks = pygame.time.get_ticks()
+demo_board = TicTacToeBoard()
 
 # For Draw O
 def draw_O(win,x,y,width):
     radius = width//2
     center = (x+radius,y+radius)
-    pygame.draw.circle(win,green,center,radius-5,6)
+    pygame.draw.circle(win,(0,0,255),center,radius-5,6)
 
 # For Draw X
 def draw_X(win,x,y,width):
@@ -31,10 +50,12 @@ def draw_X(win,x,y,width):
 
 # Animation for demo screen
 def animation_of_demo():
+    global demo_game_grid, start_ticks
+
     # Introduce 5 seconds delay before starting
     current_ticks = pygame.time.get_ticks()
-    if current_ticks - start_ticks < 5000:
-        
+    if current_ticks - start_ticks > 250:
+        demo_game_grid = demo_board.insert_value()
 
         start_ticks = pygame.time.get_ticks()
 
@@ -68,6 +89,14 @@ def draw_home_page(win):
             draw_O(win,x,y,65)
         elif demo_game_grid[i] == "X":
             draw_X(win,x,y,65)
+        elif demo_game_grid[i] == "Tic":
+            print_text(win,"TIC",(255,255,0),x+7,y+23,get_font(fonts[0],25))
+        elif demo_game_grid[i] == "Tac":
+            print_text(win,"TAC",(255,255,0),x+7,y+23,get_font(fonts[0],25))
+        elif demo_game_grid[i] == "Toe":
+            print_text(win,"TOE",(255,255,0),x+7,y+23,get_font(fonts[0],25))
+
+        animation_of_demo()
 
 # For check home page event
 def check_event_of_home_page(event):

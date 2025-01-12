@@ -9,7 +9,7 @@ pygame.init()
 
 # Creating window
 win = pygame.display.set_mode(RES) # make screen/window object
-pygame.display.set_caption("Tic TAC TOE Game By Technical Coderji") # set title of screen
+pygame.display.set_caption("Tic Tac Toe Game By Technical Coderji") # set title of screen
 clock = pygame.time.Clock() # initialized clock for time and FPS
 FPS = 60 # set FPS
 
