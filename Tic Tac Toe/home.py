@@ -118,7 +118,7 @@ def check_event_of_home_page(event):
         stack.append("gamepage")
 
     elif com_play_button.is_clicked(event):
-        print("vscomgame")
+        stack.append("vscom")
 
     elif online_play_button.is_clicked(event):
         print("online")

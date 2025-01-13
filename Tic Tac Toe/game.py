@@ -1,5 +1,6 @@
 # module for Game Page
 import pygame
+from random import choice
 
 from core import GetImage,WIDTH,HEIGHT,assets,red,green,white,print_text,get_font,fonts,ImageButton,stack
 
@@ -8,7 +9,7 @@ pygame.init()
 
 # variables
 game_grids = {(i, j): None for i in range(3) for j in range(3)}
-move_count = 0
+move_count = choice([0,1])
 game_state = "running"
 
 # Define a color with an alpha value (RGBA)
@@ -61,14 +62,8 @@ def draw_X(win,x,y,width):
 def game_restart():
     global move_count, game_grids
 
-    move_count = 0
+    move_count = choice([0,1])
     game_grids = {(i, j): None for i in range(3) for j in range(3)}
-
-# For shifting move
-def shift_move():
-    global move_count
-
-    move_count += 1
 
 # Function for cheking winner of game
 def check_winner():
@@ -107,14 +102,14 @@ def draw_pause_menu(win):
             if winner == "Tie":
                 print_text(win,"Tie",(0,0,0),175,237,get_font(fonts[0],35))
             else:
-                print_text(win,winner+" Won the Game",(0,0,0),65,237,get_font(fonts[0],35))
+                print_text(win,winner+" Win the Game",(0,0,0),65,237,get_font(fonts[0],35))
 
             home_1_button.draw(win)
             replay_button.draw(win)
 
 # For check game page event
 def check_event_of_game_page(event):
-    global game_state,stack
+    global game_state,stack,move_count
     
     # For mouse button down check
     if event.type == pygame.MOUSEBUTTONDOWN:
@@ -126,7 +121,7 @@ def check_event_of_game_page(event):
                     rect = pygame.rect.Rect(i*120+31,j*120+31,100,100)
                     if rect.collidepoint(x,y):
                         game_grids[(i,j)] = player
-                        shift_move()
+                        move_count += 1
                         break
             if pause_button.is_clicked(event):
                 game_state = "pause"
