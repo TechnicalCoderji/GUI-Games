@@ -20,16 +20,29 @@ class TicTacToeBoard:
         self.values = ["O", "X", "O", "X", "O", "X", "Tic", "Tac", "Toe"]
         self.positions = [(0,1),(0,2),(1,2),(1,0),(2,0),(2,1),(0,0),(1,1),(2,2)]
         self.call_count = 0
+        self.board_1 = {(0,0): "Tic", (0,1): "O", (0,2): "X",
+                        (1,0): "X", (1,1): "Tac", (1,2): "O",
+                        (2,0): "O", (2,1): "X", (2,2): "Toe"}
+        self.board_2 = {(0,0): None, (0,1): "O", (0,2): "X",
+                        (1,0): "X", (1,1): None, (1,2): "O",
+                        (2,0): "O", (2,1): "X", (2,2): None}
+        self.blinking = False
 
     def insert_value(self):
-        if self.call_count < len(self.values):
-            pos = self.positions[self.call_count]
-            self.board[pos] = self.values[self.call_count]
-        elif self.call_count == 9:
-            for key in self.board:
-                self.board[key] = None
-            self.call_count = -1
-        self.call_count += 1
+        if self.blinking:
+            if self.board == self.board_1:
+                self.board = self.board_2
+            else:
+                self.board = self.board_1
+
+        else:
+            if self.call_count < len(self.values):
+                pos = self.positions[self.call_count]
+                self.board[pos] = self.values[self.call_count]
+            elif self.call_count == 9:
+                self.blinking = True
+            self.call_count += 1
+            
         return self.board
 
 # Variables
