@@ -121,7 +121,7 @@ def check_event_of_home_page(event):
         stack.append("vscom")
 
     elif online_play_button.is_clicked(event):
-        print("online")
+        print("online play coming soon.")
 
 if __name__ == "__main__":
     pass
