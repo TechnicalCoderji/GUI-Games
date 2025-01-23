@@ -2,7 +2,7 @@
 import pygame
 from random import choice
 
-from core import GetImage,WIDTH,HEIGHT,assets,red,green,white,print_text,get_font,fonts,ImageButton,stack
+from core import GetImage,WIDTH,HEIGHT,assets,red,white,print_text,get_font,fonts,ImageButton,stack
 
 # Initilize pygame
 pygame.init()

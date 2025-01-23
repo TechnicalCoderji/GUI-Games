@@ -5,6 +5,7 @@ from core import RES,stack
 from game import draw_game_page,check_event_of_game_page
 from home import draw_home_page,check_event_of_home_page
 from computer import draw_com_page,check_event_of_com_page
+from multiplayer import draw_multiplayer_page,check_event_of_multiplayer_page
 
 # a function that initializes all imported Pygame modules
 pygame.init()
@@ -25,6 +26,8 @@ def draw_window(win):
         draw_game_page(win)
     elif page == "vscom":
         draw_com_page(win)
+    elif page == "multiplayer":
+        draw_multiplayer_page(win)
 
 # For check every event
 def check_event(event):
@@ -36,6 +39,8 @@ def check_event(event):
         check_event_of_game_page(event)
     elif page == "vscom":
         check_event_of_com_page(event)
+    elif page == "multiplayer":
+        check_event_of_multiplayer_page(event)
 
 def main():
     global stack
