@@ -5,7 +5,7 @@ from core import RES,stack
 from game import draw_game_page,check_event_of_game_page
 from home import draw_home_page,check_event_of_home_page
 from computer import draw_com_page,check_event_of_com_page
-from onlinemultiplayer import draw_multiplayer_page,check_event_of_multiplayer_page
+from online_play.multiplayer import draw_multiplayer_page,check_event_of_multiplayer_page
 
 # a function that initializes all imported Pygame modules
 pygame.init()

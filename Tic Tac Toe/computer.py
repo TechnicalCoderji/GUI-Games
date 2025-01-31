@@ -85,12 +85,57 @@ def check_winner():
     # If there's no winner or tie, return None
     return None
 
-# For computer's move
-def get_move_from_com():
-    global game_grids
+# For checking winning condition for computer
+def check_winner_for_computer(grid, player):
+    # Check rows
+    for i in range(3):
+        if all(grid[(i, j)] == player for j in range(3)):
+            return True
+    # Check columns
+    for j in range(3):
+        if all(grid[(i, j)] == player for i in range(3)):
+            return True
+    # Check diagonals
+    if all(grid[(i, i)] == player for i in range(3)):
+        return True
+    if all(grid[(i, 2 - i)] == player for i in range(3)):
+        return True
+    return False
 
-    list_of_remaining = [pos for pos in game_grids if game_grids[pos]==None]
-    game_grids[choice(list_of_remaining)] = com_player
+# For checking available moves for computer
+def available_moves_for_computer(grid):
+    return [key for key, value in grid.items() if value is None]
+
+# For minimum and maximum wining and losing posibility
+def minimax(grid, player):
+    opponent = 'O' if player == 'X' else 'X'
+
+    if check_winner_for_computer(grid, opponent):
+        return {'position': None, 'score': 1 if opponent == 'O' else -1}
+    elif not available_moves_for_computer(grid):
+        return {'position': None, 'score': 0}
+
+    moves = []
+
+    for position in available_moves_for_computer(grid):
+        grid[position] = player
+        result = minimax(grid, opponent)
+        moves.append({'position': position, 'score': result['score']})
+        grid[position] = None
+
+    if player == 'O':
+        best_move = max(moves, key=lambda x: x['score'])
+    else:
+        best_move = min(moves, key=lambda x: x['score'])
+
+    return best_move
+
+# For computer's move
+def get_move_from_com(grid):
+
+    # Main computer algorithm
+    move = minimax(grid, com_player)
+    grid[move['position']] = com_player
 
 # For stop game
 def draw_pause_menu(win):
@@ -122,11 +167,11 @@ def draw_pause_menu(win):
 
 # For check game page event
 def check_event_of_com_page(event):
-    global game_state,stack,move_count
+    global game_state,stack,move_count,game_grids
     
     move = player if move_count%2==0 else "com"
     if move == "com" and game_state == "running":
-        get_move_from_com()
+        get_move_from_com(game_grids)
         move_count+=1
 
     # For mouse button down check
