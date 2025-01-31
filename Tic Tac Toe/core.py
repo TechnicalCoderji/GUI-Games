@@ -102,6 +102,65 @@ class GetImage:
     def draw(self,screen):
         screen.blit(self.image,(self.x,self.y))
 
+# For Text input class
+class TextInputBox:
+    def __init__(self, x, y, w, h, font, text=''):
+        self.rect = pygame.Rect(x, y, w, h)
+        self.color_inactive = (255, 206, 10)
+        self.color_active = (0,0,0)
+        self.color = self.color_inactive
+        self.text = text
+        self.font = font
+        self.txt_surface = font.render(text, True, self.color)
+        self.active = False
+        self.cursor_visible = True  # Toggle cursor visibility
+        self.cursor_timer = 0
+        self.cursor_interval = 500  # Cursor blinking interval in milliseconds
+
+    def handle_event(self, event):
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            # Toggle active state if the box is clicked
+            if self.rect.collidepoint(event.pos):
+                self.active = not self.active
+            else:
+                self.active = False
+            # Update the box color
+            self.color = self.color_active if self.active else self.color_inactive
+
+        if event.type == pygame.KEYDOWN:
+            if self.active:
+                if event.key == pygame.K_RETURN:
+                    print(f"Input: {self.text}")
+                    self.text = ''
+                elif event.key == pygame.K_BACKSPACE:
+                    self.text = self.text[:-1]
+                else:
+                    self.text += event.unicode
+                # Re-render the text surface
+                self.txt_surface = self.font.render(self.text, True, self.color)
+
+    def update(self):
+        # Adjust the width if the text is too long
+        width = max(self.rect.w, self.txt_surface.get_width()+10)
+        self.rect.w = width
+        # Update cursor visibility
+        self.cursor_timer += pygame.time.get_ticks()
+        if self.cursor_timer >= self.cursor_interval:
+            self.cursor_visible = not self.cursor_visible
+            self.cursor_timer = 0
+
+    def draw(self, screen):
+        # Draw the text
+        screen.blit(self.txt_surface, (self.rect.x+5, self.rect.y+5))
+        # Draw the cursor if active
+        if self.active and self.cursor_visible:
+            cursor_x = self.rect.x + 5 + self.txt_surface.get_width()
+            cursor_y_start = self.rect.y + 5
+            cursor_y_end = self.rect.y + self.rect.height - 5
+            pygame.draw.line(screen, self.color, (cursor_x, cursor_y_start), (cursor_x, cursor_y_end), 2)
+        # Draw the input box rect
+        pygame.draw.rect(screen, self.color, self.rect, 2)
+
 # Image as well as functinalitys of button
 class ImageButton:
     def __init__(self, x, y, image, width, height, text=None, font=None, font_color=(0, 0, 0)):
