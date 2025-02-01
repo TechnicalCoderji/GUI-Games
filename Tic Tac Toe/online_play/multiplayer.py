@@ -1,5 +1,5 @@
 import pygame
-from core import GetImage, assets, print_text, get_font, fonts, ImageButton, TextInputBox
+from core import assets, print_text, get_font, fonts, ImageButton, TextInputBox
 from .ip_get import get_ip
 
 # Variables
@@ -8,6 +8,7 @@ font_2 = get_font(fonts[0],30)
 font_3 = get_font(fonts[0],20)
 multiplayer_stack = ["home"]
 server_IP_address = get_ip()
+p1 = n = None
 
 # Objects
 join_game = ImageButton(95,300,assets["Yellow"]["button_rectangle_depth_flat"],210,70,"Join Game",font_2,(7,7,7))
@@ -44,6 +45,11 @@ def draw_multiplayer_page(win):
         
         print_text(win, server_IP_address, (255,255,255), 55,60,font_2)
 
+
+    elif page == "game":
+        
+        pass
+
 def check_event_of_multiplayer_page(event):
     global multiplayer_stack
     
@@ -64,4 +70,7 @@ def check_event_of_multiplayer_page(event):
             print(input_box.text)
 
     elif page == "host":
+        pass
+
+    elif page == "game":
         pass

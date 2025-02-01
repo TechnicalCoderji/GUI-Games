@@ -131,7 +131,7 @@ class TextInputBox:
             if self.active:
                 if event.key == pygame.K_RETURN:
                     print(f"Input: {self.text}")
-                    self.text = ''
+                    
                 elif event.key == pygame.K_BACKSPACE:
                     self.text = self.text[:-1]
                 else:
