@@ -135,7 +135,8 @@ def get_move_from_com(grid):
 
     # Main computer algorithm
     move = minimax(grid, com_player)
-    grid[move['position']] = com_player
+    if move:
+        grid[move['position']] = com_player
 
 # For stop game
 def draw_pause_menu(win):
