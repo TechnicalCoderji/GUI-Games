@@ -1,19 +1,8 @@
 import socket
 import pickle
+import threading
 
 class TicTacToe:
-    
-    # List of winning combinations
-    winning_combinations = [
-        [(0, 0), (0, 1), (0, 2)],  # Top row
-        [(1, 0), (1, 1), (1, 2)],  # Middle row
-        [(2, 0), (2, 1), (2, 2)],  # Bottom row
-        [(0, 0), (1, 0), (2, 0)],  # Left column
-        [(0, 1), (1, 1), (2, 1)],  # Middle column
-        [(0, 2), (1, 2), (2, 2)],  # Right column
-        [(0, 0), (1, 1), (2, 2)],  # Diagonal from top-left to bottom-right
-        [(0, 2), (1, 1), (2, 0)],  # Diagonal from top-right to bottom-left
-    ]
 
     def __init__(self):
         self.board = [[" " for _ in range(3)] for _ in range(3)]
@@ -25,42 +14,52 @@ class TicTacToe:
         self.counter = 0
 
     def host_game(self, host, port):
-        self.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.server.bind((host,port))
-        self.server.listen(1)
+        server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        server.bind((host,port))
+        server.listen(1)
 
         self.you = "O"
         self.opponent = "X"
 
-        client, addr = self.server.accept()
+        client, addr = server.accept()
+
+        threading.Thread(target=self.handle_connection, args=(client,)).start()
+        server.close()
 
     def connect_to_game(self ,host, port):
 
-        self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.client.connect((host, port))
+        client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        client.connect((host, port))
 
         self.you = "X"
         self.opponent = "O"
 
-    def handle_connection(self, client, move):
+        threading.Thread(target=self.handle_connection, args=(client,)).start()
 
-        if self.turn == self.you:
+    def handle_connection(self, client):
 
-            self.apply_move(move,self.you)
-            self.turn = self.opponent
-            client.send(pickle.dumps(move))
+        while True:
+            if self.turn == self.you:
+                move = (1,2)
+                
+                self.apply_move(move.split(","),self.you)
+                self.turn = self.opponent
+                client.send(pickle.dumps(move))
 
-        else:
-            data = pickle.loads(client.recv(128))
-            if not data:
-                return False
             else:
-                self.apply_move(data, self.opponent)
-                self.turn = self.you
+                data = pickle.loads(client.recv(128))
+                if not data:
+                    break
+                else:
+                    self.apply_move(data, self.opponent)
+                    self.turn = self.you
 
-        # client.close()
+        client.close()
 
     def apply_move(self, move, player):
         
         self.counter += 1
         self.board[move[0]][move[1]] = player
+
+if __name__ == "main":
+    pass

@@ -1,7 +1,6 @@
 import pygame
 from core import assets, print_text, get_font, fonts, ImageButton, TextInputBox
 from .ip_get import get_ip
-from .gameboard import TicTacToe
 
 # Variables
 font_1 = get_font(fonts[0],40)
@@ -9,8 +8,6 @@ font_2 = get_font(fonts[0],30)
 font_3 = get_font(fonts[0],20)
 multiplayer_stack = ["home"]
 server_IP_address = get_ip()
-game = None
-
 
 # Objects
 join_game = ImageButton(95,300,assets["Yellow"]["button_rectangle_depth_flat"],210,70,"Join Game",font_2,(7,7,7))
@@ -47,14 +44,11 @@ def draw_multiplayer_page(win):
         
         print_text(win, server_IP_address, (255,255,255), 55,60,font_2)
 
-        if game.handle_connection(game.client)
-
     elif page == "game":
-        
         pass
 
 def check_event_of_multiplayer_page(event):
-    global multiplayer_stack,game
+    global multiplayer_stack
     
     page = multiplayer_stack[-1]
 
@@ -64,8 +58,6 @@ def check_event_of_multiplayer_page(event):
             multiplayer_stack.append("join")
 
         elif host_game.is_clicked(event):
-            game = TicTacToe()
-            game.host_game(server_IP_address, 9999)
 
             multiplayer_stack.append("host")
 
@@ -75,9 +67,6 @@ def check_event_of_multiplayer_page(event):
 
         if join_button.is_clicked(event):
             print(input_box.text)
-
-            game = TicTacToe()
-            game.connect_to_game(input_box.text, 9999)
 
     elif page == "host":
         pass
