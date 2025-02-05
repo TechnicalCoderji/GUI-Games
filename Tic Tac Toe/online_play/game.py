@@ -15,6 +15,7 @@ class GameBoard:
         self.board = {(i,j):None for i in range(3) for j in range(3)}
         self.ready = False
         self.move_count = 0
+        self.turn = "X"
 
     def connected(self):
         return self.ready
@@ -23,6 +24,7 @@ class GameBoard:
         
         self.board[move] = player
         self.move_count += 1
+        self.turn = "X" if self.turn == "O" else "O"
     
     def winner(self):
         # Check for a winner

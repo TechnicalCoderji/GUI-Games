@@ -58,7 +58,7 @@ def threaded_client(conn, player_sign):
                 if data == "reset":
                     Game.reset_board()
                 elif data != "get":
-                    Game.play(player_sign, (data[0],data[1]))
+                    Game.play(player_sign, (int(data[0]),int(data[1])))
 
             conn.sendall(pickle.dumps(Game))
         except:
