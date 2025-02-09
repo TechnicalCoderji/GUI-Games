@@ -1,5 +1,5 @@
 import pygame
-from core import assets, print_text, get_font, fonts, ImageButton, TextInputBox
+from core import assets, print_text, get_font, fonts, ImageButton, TextInputBox, WIDTH, HEIGHT, GetImage
 
 # For Multiplayer Game
 from .ip_get import get_ip
@@ -9,6 +9,7 @@ from .Server import start_server
 
 # Variables
 font_1 = get_font(fonts[0],40)
+font_1_5 = get_font(fonts[0],35)
 font_2 = get_font(fonts[0],30)
 font_3 = get_font(fonts[0],20)
 multiplayer_stack = ["home"]
@@ -20,11 +21,33 @@ network_object = None
 player = None
 game = None
 
+# IMAGES
+pause_bg = GetImage((20,215,360,120),assets["Yellow"]["button_rectangle_border"])
+
+# Define a color with an alpha value (RGBA)
+transparent_color = (0, 0, 0, 150)  # Green with 50% transparency
+
+# Create a surface with transparency
+transparent_surface = pygame.Surface((WIDTH,HEIGHT), pygame.SRCALPHA)
+transparent_surface.fill(transparent_color)
+
 # Objects
 join_game = ImageButton(95,300,assets["Yellow"]["button_rectangle_depth_flat"],210,70,"Join Game",font_2,(7,7,7))
+
 host_game = ImageButton(95,390,assets["Red"]["button_rectangle_depth_flat"],210,70,"Host Game",font_2,(7,7,7))
+
 input_box = TextInputBox(75,100,250,30,font_3)
+
 join_button = ImageButton(95,150,assets["Yellow"]["button_rectangle_depth_flat"],210,70,"Join Game",font_2,(7,7,7))
+
+pause_button = ImageButton(20,470,assets["Yellow"]["button_square_depth_flat"],60,60,"| |",get_font(fonts[0],30),(0,0,0))
+
+# Buttons
+home_button = ImageButton(90,280,assets["Blue"]["button_rectangle_depth_flat"],90,30,"Home",get_font(fonts[0],17),(0,0,0))
+
+continue_button = ImageButton(220,280,assets["Yellow"]["button_rectangle_depth_flat"],90,30,"Continue",get_font(fonts[0],17),(0,0,0))
+
+replay_button = ImageButton(220,280,assets["Green"]["button_rectangle_depth_flat"],90,30,"Replay",get_font(fonts[0],17),(0,0,0))
 
 # Functions
 # For Draw O
@@ -57,31 +80,48 @@ def handle_event_of_game_page(event):
                         if rect.collidepoint(x,y):
                             network_object.send(tuple_to_string(i,j))
                             break
-            # if pause_button.is_clicked(event):
-            #     game_state = "pause"
+            if pause_button.is_clicked(event):
+                game_state = "pause"
     
-        # elif game_state == "pause":
-        #     if home_button.is_clicked(event):
-        #         stack.pop()
-        #         game_restart()
-        #         game_state = "running"
+        elif game_state == "pause":
+            if home_button.is_clicked(event):
+                print("Home")
 
-        #     elif restart_button.is_clicked(event):
-        #         game_restart()
-        #         game_state = "running"
+            elif continue_button.is_clicked(event):
+                game_state = "running"
 
-        #     elif continue_button.is_clicked(event):
-        #         game_state = "running"
+        elif game_state == "win":
+            if home_button.is_clicked(event):
+                print("Home")
 
-        # elif game_state == "win":
-        #     if home_1_button.is_clicked(event):
-        #         stack.pop()
-        #         game_restart()
-        #         game_state = "running"
+            elif replay_button.is_clicked(event):
+                print("Replay")
 
-        #     elif replay_button.is_clicked(event):
-        #         game_restart()
-        #         game_state = "running"
+# For Drawing Pause Menu
+def draw_pause_menu(win):
+    global game_state
+    winner = game.winner()
+    game_state = "win" if winner else "running" if game_state!="pause" else "pause"
+
+    if game_state != "running":
+        win.blit(transparent_surface,(0,0))
+        pause_bg.draw(win)
+
+        if game_state == "pause":
+            print_text(win,"Pause",(0,0,0),145,237,get_font(fonts[0],35))
+
+            home_button.draw(win)
+            continue_button.draw(win)
+
+        if game_state == "win":
+            text_message = "You Win The Game" if winner == player else "You Lose The Game"
+            if winner == "Tie":
+                print_text(win,"Tie",(0,0,0),175,237,get_font(fonts[0],35))
+            else:
+                print_text(win,text_message,(0,0,0),60,237,get_font(fonts[0],30))
+
+            home_button.draw(win)
+            replay_button.draw(win)
 
 # For Drawing Game Page
 def draw_game_page(win):
@@ -110,6 +150,16 @@ def draw_game_page(win):
             draw_O(win,x,y,100)
         elif game.board[i] == "X":
             draw_X(win,x,y,100)
+
+    pygame.draw.rect(win,(100,100,100),(0,400,WIDTH,150))
+    pause_button.draw(win)
+
+    if game_state != "win":
+        text_to_blit = "Your Move" if game.turn == player else "Oppenent's Move"
+        print_text(win,f"You Are {player}",(255,255,255),100,430,font_1_5)
+        print_text(win,text_to_blit,(255,255,255),100,490,font_1_5)
+
+    draw_pause_menu(win)
 
 def draw_multiplayer_page(win):
     global game, network_object
