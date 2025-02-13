@@ -42,6 +42,9 @@ def start_server(ip_addr):
 
         start_new_thread(threaded_client,(conn, p))
 
+        if idCount == 2:
+            break
+
 def threaded_client(conn, player_sign):
     global Game
 
@@ -57,6 +60,8 @@ def threaded_client(conn, player_sign):
             else:
                 if data == "reset":
                     Game.reset_board()
+                elif data == "leave":
+                    Game.leave = True
                 elif data != "get":
                     Game.play(player_sign, (int(data[0]),int(data[1])))
 

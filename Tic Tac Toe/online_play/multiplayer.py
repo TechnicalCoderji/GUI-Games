@@ -61,6 +61,16 @@ def draw_X(win,x,y,width):
     pygame.draw.line(win,(255,0,0),(x+10,y+10),(x+width-10,y+width-10),13)
     pygame.draw.line(win,(255,0,0),(x+10,y+width-10),(x+width-10,y+10),13)
 
+# Function for back to home
+def go_home():
+    global network_object,player
+
+    while multiplayer_stack[-1] != "home":
+        multiplayer_stack.pop()
+    
+    network_object = None
+    player = None
+
 # For convert tuple to string 
 tuple_to_string = lambda x,y : f"{x}{y}"
 
@@ -78,24 +88,27 @@ def handle_event_of_game_page(event):
                     if not game.board[(i,j)]:
                         rect = pygame.rect.Rect(i*120+31,j*120+31,100,100)
                         if rect.collidepoint(x,y):
-                            network_object.send(tuple_to_string(i,j))
+                            game = network_object.send(tuple_to_string(i,j))
                             break
             if pause_button.is_clicked(event):
                 game_state = "pause"
     
         elif game_state == "pause":
             if home_button.is_clicked(event):
-                print("Home")
+                game = network_object.send("leave")
+                go_home()
 
             elif continue_button.is_clicked(event):
                 game_state = "running"
 
         elif game_state == "win":
             if home_button.is_clicked(event):
-                print("Home")
+                game = network_object.send("leave")
+                go_home()
 
             elif replay_button.is_clicked(event):
-                print("Replay")
+                game = network_object.send("reset")
+                game_state = "running"
 
 # For Drawing Pause Menu
 def draw_pause_menu(win):
@@ -139,27 +152,31 @@ def draw_game_page(win):
         pygame.draw.circle(win,(255,255,255),((120*i)+21,380),5)
 
     game = network_object.send("get")
-    for i in game.board:
-        
-        # Position for each O and X in cordinate (x,y)
-        x = (i[0]*120)+31
-        y = (i[1]*120)+31
 
-        # For drawing X or O on screen
-        if game.board[i] == "O":
-            draw_O(win,x,y,100)
-        elif game.board[i] == "X":
-            draw_X(win,x,y,100)
+    if not game:
+        go_home()
+    else:
+        for i in game.board:
+            
+            # Position for each O and X in cordinate (x,y)
+            x = (i[0]*120)+31
+            y = (i[1]*120)+31
 
-    pygame.draw.rect(win,(100,100,100),(0,400,WIDTH,150))
-    pause_button.draw(win)
+            # For drawing X or O on screen
+            if game.board[i] == "O":
+                draw_O(win,x,y,100)
+            elif game.board[i] == "X":
+                draw_X(win,x,y,100)
 
-    if game_state != "win":
-        text_to_blit = "Your Move" if game.turn == player else "Oppenent's Move"
-        print_text(win,f"You Are {player}",(255,255,255),100,430,font_1_5)
-        print_text(win,text_to_blit,(255,255,255),100,490,font_1_5)
+        pygame.draw.rect(win,(100,100,100),(0,400,WIDTH,150))
+        pause_button.draw(win)
 
-    draw_pause_menu(win)
+        if game_state != "win":
+            text_to_blit = "Your Move" if game.turn == player else "Oppenent's Move"
+            print_text(win,f"You Are {player}",(255,255,255),100,430,font_1_5)
+            print_text(win,text_to_blit,(255,255,255),100,490,font_1_5)
+
+        draw_pause_menu(win)
 
 def draw_multiplayer_page(win):
     global game, network_object
@@ -191,13 +208,12 @@ def draw_multiplayer_page(win):
         
         print_text(win, "Host Server IP", (255,255,255), 100,60,font_2)
         print_text(win, server_IP_address, (255,255,255), 100,120,font_2)
+        print_text(win, "Wating For Player", (0,255,0), 100,320,font_2)
 
         game = network_object.send("get")
         if game.connected():
             multiplayer_stack.append("game")
-        else:
-            print_text(win, "Wating For Player", (0,255,0), 100,320,font_2)
-
+        
     elif page == "game":
         draw_game_page(win)
 
@@ -237,12 +253,13 @@ def check_event_of_multiplayer_page(event):
 
             # For Game Object
             game = network_object.send("get")
-
             multiplayer_stack.append("game")
 
     elif page == "host":
         pass
 
     elif page == "game":
-            
-        handle_event_of_game_page(event)    
+        if not game.leave:
+            handle_event_of_game_page(event)
+        else:
+            go_home()

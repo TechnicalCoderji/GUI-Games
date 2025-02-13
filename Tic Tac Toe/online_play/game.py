@@ -16,6 +16,7 @@ class GameBoard:
         self.ready = False
         self.move_count = 0
         self.turn = "X"
+        self.leave = False
 
     def connected(self):
         return self.ready
